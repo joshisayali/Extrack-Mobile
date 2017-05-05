@@ -41,15 +41,21 @@ angular.module('extrackMobile.controllers', [])
   };
 })
 
-.controller('HomeCtrl', function($scope) { 
-})
+.controller('HomeCtrl',['$scope',function($scope){
+    $scope.bgImage = '../img/free-finance-books-760x463.jpg';    
+}])
 
-.controller('ExpenseCtrl', function($scope) {
-  $scope.expenses = [
-    { id:1, expenseDate: '04/01/2017', expenseItem: 'Grocery' },
-    { id:1, expenseDate: '04/02/2017', expenseItem: 'Rent' }    
-  ];
-})
+.controller('ExpenseCtrl', ['$scope','expenseFactory',function($scope, expenseFactory) {
+  $scope.expenses = expenseFactory.getExpenses().query()
+    .$promise.then(
+        function(response){
+            $scope.expenses = response;
+        
+        },function(error){            
+            console.log('Error: '+error);            
+        }
+    );
+}])
 
 .controller('ExpenseDetailsCtrl', function($scope, $stateParams) {
 });
