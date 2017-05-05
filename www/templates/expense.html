@@ -1,0 +1,10 @@
+<ion-view view-title="Expense">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="expense in expenses" href="#/app/expense/{{expense.id}}">
+        {{expense.expenseDate}}
+        {{expense.expenseItem}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
