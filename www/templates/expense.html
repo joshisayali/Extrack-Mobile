@@ -1,10 +1,15 @@
 <ion-view view-title="Expense">
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="expense in expenses" href="#/app/expense/{{expense.id}}">
-        {{expense.expenseDate}}
-        {{expense.expenseItem}}
+      <ion-item ng-repeat="expense in expenses" href="#/app/expense/{{expense.id}}">            
+            {{expense.expenseDate}}
+            {{expense.expenseItem}}
+            <span class="item-note">${{expense.expenseAmount}}</span>
       </ion-item>
+      <ion-item>
+          <b>Total</b>
+          <span class="item-note">${{getTotal()}}</span>
+       </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

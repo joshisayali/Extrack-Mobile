@@ -55,7 +55,23 @@ angular.module('extrackMobile.controllers', [])
             console.log('Error: '+error);            
         }
     );
+
+    $scope.getTotal = function(){
+        var total = 0;
+        for(var i=0; i<$scope.expenses.length; i++)
+            {
+                total+=$scope.expenses[i].expenseAmount;
+            }
+        return total;
+    };
 }])
 
-.controller('ExpenseDetailsCtrl', function($scope, $stateParams) {
-});
+.controller('ExpenseDetailsCtrl', ['$scope','$stateParams','expenseFactory',function($scope, $stateParams, expenseFactory) {
+    $scope.expense = expenseFactory.getExpenses().get({id:parseInt($stateParams.id,10)})
+    .$promise.then(
+        function(response){
+            $scope.expense = response;
+        },function(error){
+            console.log(error);
+        })
+}]);

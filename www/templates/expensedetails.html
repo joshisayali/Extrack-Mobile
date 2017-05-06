@@ -1,5 +1,34 @@
 <ion-view view-title="Expense Details">
   <ion-content>
-    <h1>Expense Details</h1>
+    <div class="card">
+        <div class="item item-divider">Expense Details</div>
+        <div class="item item-text-wrap row">
+            <div class="col col-30">When?</div>
+            <div class="col">{{expense.expenseDate}}</div>            
+        </div>
+        <div class="item item-text-wrap row">
+            <div class="col col-30">What?</div>
+            <div class="col">{{expense.expenseItem}}</div>
+        </div>
+        <div class="row item item-text-wrap">
+            <div class="col col-30">How much?</div>
+            <div class="col">{{expense.expenseAmount}}</div>
+        </div>
+        <div class="row item item-text-wrap">
+            <div class="col col-30">How?</div>
+            <div class="col">{{expense.expensePayment}}</div>
+        </div>
+        <div class="row item item-text-wrap">
+            <div class="col col-30">Category</div>
+            <div class="col">{{expense.expenseSubCategory}}</div>
+        </div>
+        <div class="row item item-text-wrap">
+            <div class="col col-30">Repeat</div>
+            <div class="col">{{expense.expenseRepeat}}</div>
+        </div>   
+        <div class="item item-divider">
+            <a class="button button-positive button-block">Edit</a>
+        </div>
+    </div>
   </ion-content>
 </ion-view>

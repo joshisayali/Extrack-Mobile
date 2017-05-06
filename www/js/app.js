@@ -52,11 +52,11 @@ angular.module('extrackMobile', ['ionic', 'extrackMobile.controllers','extrackMo
       }
     })
   .state('app.expensedetails', {
-    url: '/expense/:expenseid',
+    url: '/expense/:id',
     views: {
       'menuContent': {
         templateUrl: 'templates/expensedetails.html',
-        controller: 'ExpenseCtrl'
+        controller: 'ExpenseDetailsCtrl'
       }
     }
   });
