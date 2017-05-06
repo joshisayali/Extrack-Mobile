@@ -5,7 +5,7 @@ angular.module('extrackMobile.services',['ngResource'])
     
                 this.getExpenses = function(){
                     
-                    return $resource(baseURL+"expenses/:id",null,  {'update':{method:'PUT' }});
+                    return $resource(baseURL+"expenses/:id",null,  {'update':{method:'PUT' },'create':{method:'POST'}});
                     
                 };    
                         

@@ -27,7 +27,11 @@
             <div class="col">{{expense.expenseRepeat}}</div>
         </div>   
         <div class="item item-divider">
-            <a class="button button-positive button-block">Edit</a>
+            <div class="button-bar">
+                <button class="button button-positive button-block" ng-click="openEditExpenseModal()">Edit</button>
+                <button class="button button-assertive button-block" ng-click="deleteExpense()">Delete</button>
+            </div>
+            
         </div>
     </div>
   </ion-content>

@@ -45,7 +45,8 @@ angular.module('extrackMobile.controllers', [])
     $scope.bgImage = '../img/free-finance-books-760x463.jpg';    
 }])
 
-.controller('ExpenseCtrl', ['$scope','expenseFactory',function($scope, expenseFactory) {
+.controller('ExpenseCtrl', ['$scope','$ionicModal','$state','expenseFactory',function($scope,$ionicModal,$state, expenseFactory) {
+/*--------------------------------------------Routes--------------------------------------------------*/
   $scope.expenses = expenseFactory.getExpenses().query()
     .$promise.then(
         function(response){
@@ -55,23 +56,102 @@ angular.module('extrackMobile.controllers', [])
             console.log('Error: '+error);            
         }
     );
-
+/*--------------------------------------------Functions------------------------------------------------*/
     $scope.getTotal = function(){
         var total = 0;
         for(var i=0; i<$scope.expenses.length; i++)
             {
-                total+=$scope.expenses[i].expenseAmount;
+                total+=parseInt($scope.expenses[i].expenseAmount);
             }
         return total;
     };
+/*--------------------------------------------Modals--------------------------------------------------*/
+    
+    //create expense
+    $scope.newExpense = {};
+    $ionicModal.fromTemplateUrl('templates/createexpense.html', {scope: $scope})
+        .then(function(modal) {
+            $scope.createexpenseform = modal;
+      });
+    
+    $scope.openCreateExpenseModal = function(){
+        $scope.createexpenseform.show();
+    };
+    
+    $scope.closeCreateExpenseModal = function(){
+        $scope.createexpenseform.hide();
+        $state.go($state.current, {}, {reload: true});
+    };
+    
+    $scope.createExpense = function(){
+        
+        console.log($scope.newExpense);
+        expenseFactory.getExpenses().create($scope.newExpense)
+        .$promise.then(
+            function(resp){
+                console.log(resp);                
+            },
+            function(error){
+                console.log(error);                
+            });        
+                
+    };    
+    
 }])
 
-.controller('ExpenseDetailsCtrl', ['$scope','$stateParams','expenseFactory',function($scope, $stateParams, expenseFactory) {
+.controller('ExpenseDetailsCtrl', ['$scope','$stateParams','$ionicModal','$state','expenseFactory',function($scope, $stateParams,$ionicModal,$state, expenseFactory) {
+    /*---------------------------------------route-----------------------------------------------*/
     $scope.expense = expenseFactory.getExpenses().get({id:parseInt($stateParams.id,10)})
     .$promise.then(
         function(response){
             $scope.expense = response;
         },function(error){
             console.log(error);
-        })
+        });
+    
+    /*---------------------------------------function-----------------------------------------------*/
+    
+    $scope.deleteExpense = function(){
+        
+        $scope.expense = expenseFactory.getExpenses().delete({id:$scope.expense.id})
+            .$promise.then(
+                function(response){
+                    $scope.expense = response;
+                    $state.go('app.expense', {}, {reload: true});
+                },function(error){
+                    console.log(error);
+            }); 
+        
+        
+    };
+    
+    /*---------------------------------------modal-----------------------------------------------*/
+    //Edit expense
+    $ionicModal.fromTemplateUrl('templates/editexpense.html', {scope: $scope})
+        .then(function(modal) {
+            $scope.editexpenseform = modal;
+      });
+    
+    $scope.openEditExpenseModal = function(){
+        $scope.editexpenseform.show();
+    };
+    
+    $scope.closeEditExpenseModal = function(){
+        $scope.editexpenseform.hide();
+        $state.go($state.current, {}, {reload: true});
+    };
+    
+    $scope.editExpense = function(){
+        
+        console.log($scope.expense);
+        expenseFactory.getExpenses().update({id:$scope.expense.id})
+        .$promise.then(
+            function(resp){
+                console.log(resp);               
+            },
+            function(error){
+                console.log(error);                
+            });                
+    };
+    
 }]);
